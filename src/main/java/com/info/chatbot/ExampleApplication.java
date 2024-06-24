@@ -11,12 +11,6 @@ public class ExampleApplication {
 	public static void main(String[] args) {
 		SpringApplication.run(ExampleApplication.class, args);
 
-
-//		ApplicationContext context = new AnnotationConfigApplicationContext(AppConfig.class);
-//		SearchCourtCasesServiceImp myService = context.getBean(SearchCourtCasesServiceImp.class);
-//		log.info("MyService bean obtained: " + myService);
-//		myService.someServiceMethod();
-
 	}
 
 }
