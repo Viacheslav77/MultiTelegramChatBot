@@ -42,7 +42,7 @@ public class TelegramBotImp extends TelegramLongPollingBot implements TelegramBo
 
     private SubscribeRepository subscribeRepository;
 
-    private final SubscribeServiceImpl signedUpService;
+    private final SubscribeServiceImpl subscribeService;
 
     private final BotConfig config;
     private final MenuBotBuilder menuBotBuilder;
@@ -55,13 +55,13 @@ public class TelegramBotImp extends TelegramLongPollingBot implements TelegramBo
     private final boolean active;
 
     public TelegramBotImp( BotConfig config,
-                           SubscribeServiceImpl signedUpService,
+                           SubscribeServiceImpl subscribeService,
                            MenuBotBuilder menuBotBuilder,
                            UserBotServiceImp userBotService,
                            SearchCourtCasesService searchCourtService,
                            AnalisesCourtCasesService analysisCourtService) {
 
-        this.signedUpService = signedUpService;
+        this.subscribeService = subscribeService;
         this.config = config;
         this.active = config.isSendActive();
         this.menuBotBuilder = menuBotBuilder;
@@ -195,6 +195,7 @@ public class TelegramBotImp extends TelegramLongPollingBot implements TelegramBo
                 executeMessage(menuBotBuilder.getCourtPractice(chatId, analysisCourtService.parsingItemAnalises(12)));
 
             } else if (messageText.contains("/search_court_")) {
+                sendTypingStatus(chatId);
                 searchingByCaseNumber(Integer.parseInt(messageText.split("_")[2]));
 
             } else if (searchCourtService.getCOURT_CASE_CONSTANTS().contains(messageText)) {
@@ -275,23 +276,23 @@ public class TelegramBotImp extends TelegramLongPollingBot implements TelegramBo
                 }
             }
             if (callbackData.equals(NEW_SEARCHING_CASES)) {
+                sendTypingStatus(chatId);
                 searchCourtService.setNewCourtCase(chatId);
                 executeMessage(menuBotBuilder.getSearchCourtCases(chatId, TEXT_SEARCH_COURT_CASES));
             }
             if (callbackData.equals(ACTION_SUBSCRIBE)) {
                 Subscribe newSubscribe = searchCourtService.saveSubscribeClient();
                 newSubscribe.setChatId(chatId);
-                signedUpService.create(newSubscribe);
+                subscribeService.create(newSubscribe);
                 executeMessage(menuBotBuilder.getSearchCourtCases(chatId, SIGNED_UP_TEXT + searchCourtService.getLastCaseNumber()));
             }
             if (callbackData.contains(ACTION_UNSUBSCRIBE)) {
                 String caseNumber = callbackData.split("_")[1];
                 Subscribe newSubscribe = searchCourtService.saveSubscribeClient();
                 newSubscribe.setChatId(chatId);
-                signedUpService.deleteByCaseNumber(caseNumber);
+                subscribeService.deleteByCaseNumber(caseNumber);
                 executeMessage(menuBotBuilder.getSearchCourtCases(chatId, SIGNED_UP_TEXT + searchCourtService.getLastCaseNumber()));
             }
-
         }
     }
 

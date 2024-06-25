@@ -21,11 +21,6 @@ public class WebClientServiceImp implements WebClientService {
         this.webClientConfig = webClientConfig;
     }
 
-//    public WebDriver getWebDriver() {
-//        System.setProperty(webClientConfig.getWebdriverType(), webClientConfig.getWebdriverPath());
-//        return new ChromeDriver();
-//    }
-
     @Override
     public WebDriver parseCourtGovUaHTML() {
         WebDriver driver = new ChromeDriver();
@@ -69,18 +64,5 @@ public class WebClientServiceImp implements WebClientService {
         }
         return tableData;
     }
-
-//    public WebClient getWebClient() {
-//        final WebClient webClient = new WebClient();
-//        webClient.getOptions().setJavaScriptEnabled(true);
-//        webClient.getOptions().setThrowExceptionOnScriptError(false);
-//        webClient.getCookieManager().setCookiesEnabled(true);
-//        return webClient;
-//    }
-
-
-
-
-
 
 }
