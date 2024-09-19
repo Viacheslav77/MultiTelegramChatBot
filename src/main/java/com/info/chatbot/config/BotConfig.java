@@ -15,11 +15,20 @@ public class BotConfig {
     @Value("${bot.name.one}")
     String botName;
 
-    @Value("${bot.token}")
+    @Value("${bot.token.one}")
     String token;
 
-    @Value("${bot.send.active}")
+    @Value("${bot.send.active.one}")
     boolean sendActive;
+
+    @Value("${bot.name.two}")
+    String botNameTwo;
+
+    @Value("${bot.token.two}")
+    String tokenTwo;
+
+    @Value("${bot.send.active.two}")
+    boolean sendActiveTwo;
 
 
 }

@@ -48,13 +48,24 @@ public class TelegramBotFactoryImp implements TelegramBotFactory {
                 .setSendActive(config.isSendActive()
                 )
         );
-
         bots.add( createNewBot( getConfig()
                 .setBotName(config.getBotName())
                 .setToken(config.getToken())
                 .setSendActive(config.isSendActive())));
 
-        log.info("Run Telegram Bot: " + config.getBotName());
+        TelegramBotImp newBot1 = createNewBot(getConfig()
+                .setBotName(config.getBotName())
+                .setToken(config.getToken())
+                .setSendActive(config.isSendActive()
+                )
+        );
+        bots.add( createNewBot( getConfig()
+                .setBotName(config.getBotNameTwo())
+                .setToken(config.getTokenTwo())
+                .setSendActive(config.isSendActiveTwo())));
+
+        bots.forEach(b -> log.info("Run Telegram Bot: " + b.getConfig().getBotName()));
+
         return bots;
     }
     @Override

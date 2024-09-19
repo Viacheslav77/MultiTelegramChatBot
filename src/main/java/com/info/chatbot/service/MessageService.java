@@ -9,5 +9,5 @@ import org.springframework.stereotype.Service;
 @Service
 public interface MessageService {
 
-	void startSendToTelegramBot(Long chatId, String textToSend, String id);
+	void startSendToTelegramBot(Long chatId, String textToSend, String caseNamber, String botName);
 }

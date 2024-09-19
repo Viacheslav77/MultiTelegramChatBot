@@ -7,6 +7,7 @@ import com.info.chatbot.service.SubscribeService;
 import com.info.chatbot.specification.SubscribeSpecification;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.annotation.Scope;
 import org.springframework.stereotype.Service;
 import com.info.chatbot.repository.SubscribeRepository;
 
@@ -16,6 +17,7 @@ import java.util.Optional;
 
 @Service
 @Slf4j
+@Scope("prototype")
 public class SubscribeServiceImpl implements SubscribeService, BaseMapper {
 
     private SubscribeRepository repository;

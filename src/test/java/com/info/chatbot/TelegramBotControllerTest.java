@@ -58,7 +58,7 @@ import org.springframework.test.util.ReflectionTestUtils;
 
                 telegramBotController.checkingNewCases();
 
-                verify(messageService).startSendToTelegramBot(123L, "З'явилося нове рішення по судової справі №12345", "12345");
+                verify(messageService).startSendToTelegramBot(123L, "З'явилося нове рішення по судової справі №12345", "12345", "SupremeCourtInfoChatBot");
                 verify(searchCourtService).searchingNewCases(subscribeList);
             }
 

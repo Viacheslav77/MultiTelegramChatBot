@@ -73,6 +73,28 @@ public class MenuBotBuilder {
         return buildMessage(chatId, textToSend, keyboardRows);
     }
 
+    public SendMessage getDiffMainMenu(long chatId, String textToSend) {
+
+        ReplyKeyboardMarkup keyboardMarkup = new ReplyKeyboardMarkup();
+
+        KeyboardRow row2 = new KeyboardRow();
+
+        KeyboardRow row4 = new KeyboardRow();
+        KeyboardRow row5 = new KeyboardRow();
+
+
+        row2.add(SEARCH_COURT_CASES);
+        row2.add(COURT_PRACTICE);
+        row4.add(ELECTRONIC_COURT);
+        row4.add(RECEPTION_OF_CITIZENS);
+        row5.add(SAMPLE_DOCUMENTS);
+        row5.add(HOW_TO_BEHAVE_IN_COURT);
+
+        List<KeyboardRow> keyboardRows = List.of( row2, row4, row5);
+
+        return buildMessage(chatId, textToSend, keyboardRows);
+    }
+
     public SendMessage getSearchCourtCases(long chatId, String textToSend) {
 
         ReplyKeyboardMarkup keyboardMarkup = new ReplyKeyboardMarkup();

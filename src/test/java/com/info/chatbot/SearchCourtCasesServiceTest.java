@@ -64,7 +64,7 @@ public class SearchCourtCasesServiceTest {
         searchCourtCasesService.setLastDocumentFounds(documentFounds);
         searchCourtCasesService.setLastCaseNumber("001");
 
-        Subscribe result = searchCourtCasesService.saveSubscribeClient();
+        Subscribe result = searchCourtCasesService.saveSubscribeClient("SupremeCourtInfoChatBot");
 
         assertNotNull(result);
         assertEquals("001", result.getCaseNumber());

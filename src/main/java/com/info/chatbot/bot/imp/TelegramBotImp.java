@@ -41,7 +41,6 @@ import static com.info.chatbot.factory.MessageBotBuilder.*;
 public class TelegramBotImp extends TelegramLongPollingBot implements TelegramBot {
 
     private SubscribeRepository subscribeRepository;
-
     private final SubscribeServiceImpl subscribeService;
 
     private final BotConfig config;
@@ -110,7 +109,12 @@ public class TelegramBotImp extends TelegramLongPollingBot implements TelegramBo
                     messageText.equals("update_msg_text")) {
 
                 userBotService.registerUser(update.getMessage());
-                executeMessage(menuBotBuilder.getMainMenu(chatId, TEXT_MAIN_MENU));
+                if (getConfig().getBotName().equalsIgnoreCase("SupremeCourtInfoChatBot")) {
+                    executeMessage(menuBotBuilder.getMainMenu(chatId, TEXT_MAIN_MENU));
+                } else {
+                    executeMessage(menuBotBuilder.getDiffMainMenu(chatId, TEXT_MAIN_MENU));
+                }
+
                 //Пошук судових справ
             } else if ( messageText.equals(SEARCH_COURT_CASES) || messageText.equals("/searchCourtCases") ) {
                 searchCourtService.setNewCourtCase(chatId);
@@ -250,7 +254,6 @@ public class TelegramBotImp extends TelegramLongPollingBot implements TelegramBo
                 executeMessage(menuBotBuilder.getMainMenu(chatId, ERROR_TEXT_INPUTS_SEARCH_COURT_CASES));
             }
 
-
         } else if (update.hasCallbackQuery()) {
             String callbackData = update.getCallbackQuery().getData();
             long messageId = update.getCallbackQuery().getMessage().getMessageId();
@@ -281,17 +284,18 @@ public class TelegramBotImp extends TelegramLongPollingBot implements TelegramBo
                 executeMessage(menuBotBuilder.getSearchCourtCases(chatId, TEXT_SEARCH_COURT_CASES));
             }
             if (callbackData.equals(ACTION_SUBSCRIBE)) {
-                Subscribe newSubscribe = searchCourtService.saveSubscribeClient();
+                Subscribe newSubscribe = searchCourtService.saveSubscribeClient(config.getBotName());
                 newSubscribe.setChatId(chatId);
+                newSubscribe.setBotName(config.getBotName());
                 subscribeService.create(newSubscribe);
-                executeMessage(menuBotBuilder.getSearchCourtCases(chatId, SIGNED_UP_TEXT + searchCourtService.getLastCaseNumber()));
+                executeMessage(menuBotBuilder.getSearchCourtCases(chatId, SUBSCRIBE_TEXT + searchCourtService.getLastCaseNumber()));
             }
             if (callbackData.contains(ACTION_UNSUBSCRIBE)) {
                 String caseNumber = callbackData.split("_")[1];
-                Subscribe newSubscribe = searchCourtService.saveSubscribeClient();
-                newSubscribe.setChatId(chatId);
+//                Subscribe newSubscribe = searchCourtService.saveSubscribeClient(botNumber);
+//                newSubscribe.setChatId(chatId);
                 subscribeService.deleteByCaseNumber(caseNumber);
-                executeMessage(menuBotBuilder.getSearchCourtCases(chatId, SIGNED_UP_TEXT + searchCourtService.getLastCaseNumber()));
+                executeMessage(menuBotBuilder.getSearchCourtCases(chatId, UNSUBSCRIBE_TEXT + caseNumber));
             }
         }
     }
@@ -321,13 +325,13 @@ public class TelegramBotImp extends TelegramLongPollingBot implements TelegramBo
     }
 
     @Override
-    public String sendMessageToExternalChannel(Long chatId, String textToSend, String caseNamber) {
+    public String sendMessageToExternalChannel(Long chatId, String textToSend, String caseNumber) {
 
         log.info("Send message to chatId:" + chatId);
         String errorMessage = null;
         if (active) {
             try {
-                execute(menuBotBuilder.getUnsubscribeMessage(chatId, textToSend, caseNamber));
+                execute(menuBotBuilder.getUnsubscribeMessage(chatId, textToSend, caseNumber));
             } catch (TelegramApiException e) {
                 log.error(ERROR_TEXT + e.getMessage());
                 errorMessage = e.getMessage();

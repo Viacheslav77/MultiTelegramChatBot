@@ -21,6 +21,9 @@ public class Subscribe {
     @Column(name = "chat_id", nullable = false)
     private long chatId;
 
+    @Column(name = "bot_name", nullable = false)
+    private String botName;
+
     @Column(name = "case_number", nullable = false)
     private String caseNumber;
 
@@ -36,10 +39,11 @@ public class Subscribe {
     public Subscribe() {
     }
 
-    public static Subscribe buildSignedUp(String caseNumber, List<String>  decisionNumbers) {
+    public static Subscribe buildSignedUp(String caseNumber, List<String>  decisionNumbers, String botName) {
 
         return new Subscribe()
                 .setCaseNumber(caseNumber)
+                .setBotName(botName)
                 .setIsActive(true)
                 .setCreatedAt(LocalDateTime.now())
                 .setDecisionNumbers(decisionNumbers);

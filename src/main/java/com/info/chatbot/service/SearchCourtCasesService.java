@@ -17,7 +17,7 @@ public interface SearchCourtCasesService {
 
     String setValueToCourtCase(String expectedValue, String messageText);
 
-    Subscribe saveSubscribeClient();
+    Subscribe saveSubscribeClient(String botName);
 
     void setNewCourtCase(long chatId);
 

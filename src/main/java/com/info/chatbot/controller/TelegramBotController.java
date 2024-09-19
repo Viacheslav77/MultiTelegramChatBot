@@ -42,10 +42,11 @@ public class TelegramBotController {
 
 				if (!callToChats.isEmpty()) {
 					for (Subscribe item : callToChats) {
+
 						String mess = "З'явилося нове рішення по судової справі №" + item.getCaseNumber();
 						messageService.startSendToTelegramBot(
-								item.getChatId(), mess, item.getCaseNumber());
-						log.info("Sent message" + mess + " to " + item.getChatId());
+								item.getChatId(), mess, item.getCaseNumber(), item.getBotName());
+						log.info("Bot:" + item.getBotName() + " Sent message " + mess + " to " + item.getChatId());
 					}
 				}
 			}

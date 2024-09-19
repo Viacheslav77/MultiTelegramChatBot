@@ -35,15 +35,16 @@ public class MessageText {
     public static final String CASE_NUMBER = "Номер справи";
     public static final String JUDGE = "ПІБ судді";
     public static final String COURT_FORM_LABEL = "Форма судочинства";
-    public static final String PERIOD_MAKING_FROM = "Період ухвалення з дд.мм.гггг";
-    public static final String PERIOD_MAKING_TO  = "Період ухвалення по дд.мм.гггг";
+    public static final String PERIOD_MAKING_FROM = "Період ухвалення з дд.мм.рррр";
+    public static final String PERIOD_MAKING_TO  = "Період ухвалення по дд.мм.рррр";
     public static final String ACTION_UNSUBSCRIBE = "Відписатися";
 
     // Константи для періоду ухвалення
     public static final String DECISION_PERIOD = "Період ухвалення";
     public static final String ALL_DECISIONS = "Всі рішення";
 
-    public static final String SIGNED_UP_TEXT = "Ви підписалися на судову справу №";
+    public static final String SUBSCRIBE_TEXT = "Ви підписалися на судову справу №";
+    public static final String UNSUBSCRIBE_TEXT = "Ви відписалися від судової справи №";
 
     public static final String TEXT_MAIN_MENU =
             "Для швидкого доступу до інформації, будь ласка : \n\n" +
@@ -54,7 +55,8 @@ public class MessageText {
             "Задайте ключові слова по справі просто набрав текст \n\n" +
                     "Aбо клікніть потрібну кнопку нижче і введіть текст\uD83D\uDC47\n" +
                     "щоб задати один або кілька критеріїв пошуку, \n\n" +
-                    "Коли введете всі потрібні крітерії - нажміть кнопку \"Пошук\" , яка з'явиться в критеріях \n";
+                    "Коли введете всі потрібні крітерії - нажміть кнопку \"Пошук\" , яка з'явиться в критеріях \n" +
+                    "Також Ви можете змінити вибрані критерії";
 
     public static final String TEXT_COURT_PRACTICE =
             "Клікніть потрібну кнопку нижче \uD83D\uDC47\n" +

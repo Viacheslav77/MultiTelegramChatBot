@@ -11,6 +11,7 @@ import lombok.extern.slf4j.Slf4j;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
+import org.springframework.context.annotation.Scope;
 import org.springframework.stereotype.Controller;
 import org.telegram.telegrambots.meta.api.objects.Update;
 
@@ -23,6 +24,7 @@ import static com.info.chatbot.constants.MessageText.*;
 @Data
 @Controller
 @Slf4j
+@Scope("prototype")
 public class SearchCourtCasesServiceImp implements SearchCourtCasesService {
 
     private final WebClientService webClientService;
@@ -120,11 +122,11 @@ public class SearchCourtCasesServiceImp implements SearchCourtCasesService {
     }
 
     @Override
-    public Subscribe saveSubscribeClient() {
+    public Subscribe saveSubscribeClient(String botName) {
         Subscribe subscribe = null;
         try {
             List<String> lastDecisionNumber = lastDocumentFounds.stream().map(DocumentFound::getDecisionNumber).toList();
-            subscribe = Subscribe.buildSignedUp(lastCaseNumber, lastDecisionNumber);
+            subscribe = Subscribe.buildSignedUp(lastCaseNumber, lastDecisionNumber, botName);
 
         } catch (Exception e) {
             log.error("Error lastCaseNumber and lastDocumentFounds");
@@ -158,7 +160,7 @@ public class SearchCourtCasesServiceImp implements SearchCourtCasesService {
     @Override
     public String searchingByCaseNumber(String caseNumber) {
         countShowedDocs = lastSearching.size();
-//        courtCase = new CourtCase(courtCase.getChatId());
+        courtCase = new CourtCase(courtCase.getChatId());
         courtCase.setCaseNumber(caseNumber);
         return searchingByCourtCase();
     }
@@ -186,9 +188,9 @@ public class SearchCourtCasesServiceImp implements SearchCourtCasesService {
             countShowedDocs = 0;
             searchingByCourtCase();
             //-1, це помилка для тесту
-            if (lastDocumentFounds.size() != item.getDecisionNumbers().size() - 1) {
+//            if (lastDocumentFounds.size() != item.getDecisionNumbers().size() - 1) {
                 callToChats.add(item);
-            }
+//            }
         }
         return callToChats;
     }

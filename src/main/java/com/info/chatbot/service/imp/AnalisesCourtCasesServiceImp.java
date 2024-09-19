@@ -9,6 +9,7 @@ import lombok.extern.slf4j.Slf4j;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
+import org.springframework.context.annotation.Scope;
 import org.springframework.stereotype.Controller;
 
 import java.util.ArrayList;
@@ -21,6 +22,7 @@ import static com.info.chatbot.constants.SupremeCourtInfo.*;
 @Data
 @Controller
 @Slf4j
+@Scope("prototype")
 public class AnalisesCourtCasesServiceImp implements AnalisesCourtCasesService {
 
     private int limit = 10;
